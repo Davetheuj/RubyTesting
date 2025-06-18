@@ -114,7 +114,7 @@ describe FindNumber do
     # Create a random_number double called 'number_guessing'. Allow the double
     # to receive 'value' and return the value of 8, in one of the two ways
     # explained above.
-
+    let(:number_guessing) { double('random_number', { value: 8 })}
     subject(:game_guessing) { described_class.new(0, 9, number_guessing) }
 
     # Before you write the #make_guess method:
@@ -123,7 +123,9 @@ describe FindNumber do
     # It will fail with an undefined method error because you haven't
     # written #make_guess yet!
     context 'when min is 0 and max is 9' do
-      xit 'returns 4' do
+      it 'returns 4' do
+        result = ( game_guessing.max + game_guessing.min ) / 2
+        expect(game_guessing.make_guess).to eq(result)
       end
     end
 
@@ -136,22 +138,30 @@ describe FindNumber do
     # random number double created inside this method's describe block.
 
     context 'when min is 5 and max is 9' do
-      xit 'returns 7' do
+      it 'returns 7' do
+        new_game = described_class.new(5,9, number_guessing)
+        expect(new_game.make_guess).to eq(7)
       end
     end
 
     context 'when min is 8 and max is 9' do
-      xit 'returns 8' do
+      it 'returns 8' do
+        new_game = described_class.new(8, 9, number_guessing)
+        expect(new_game.make_guess).to eq(8)
       end
     end
 
     context 'when min is 0 and max is 3' do
-      xit 'returns 1' do
+      it 'returns 1' do
+        new_game = described_class.new(0, 3, number_guessing)
+        expect(new_game.make_guess).to eq(1)
       end
     end
 
     context 'when min and max both equal 3' do
-      xit 'returns 3' do
+      it 'returns 3' do
+        new_game = described_class.new(3, 3, number_guessing)
+        expect(new_game.make_guess).to eq(3)
       end
     end
   end
@@ -159,6 +169,8 @@ describe FindNumber do
   # ASSIGNMENT: METHOD #2
   describe '#game_over?' do
     context 'when guess and random_number are equal' do
+      let(:random_number) { double('random_number', value: 3)}
+      subject(:number_finder) { described_class.new(0, 10, random_number, 3) }
       # Create another subject and random_number double with meaningful names.
       # The subject will need to specify the number value of @guess.
 
@@ -168,7 +180,8 @@ describe FindNumber do
       # the random_number double's value above. Remember that this test will not
       # be able to pass yet because you haven't written the method!
 
-      xit 'is game over' do
+      it 'is game over' do
+        expect(number_finder).to be_game_over
       end
     end
 
@@ -179,7 +192,10 @@ describe FindNumber do
     # NOT equal the random_number double's value above.
 
     context 'when guess and random_number are not equal' do
-      xit 'is not game over' do
+      let(:random_number) { double('random_number', value: 4)}
+      subject(:number_finder) { described_class.new(0, 10, random_number, 3) }
+      it 'is not game over' do
+        expect(number_finder).to_not be_game_over
       end
     end
   end
